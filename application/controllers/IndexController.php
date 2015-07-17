@@ -10,9 +10,23 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $currencies = [
+            'USD' => 'USD',
+            'EUR' => 'EUR'
+        ];
+        $this->view->currencies = $currencies;
+    }
+
+    public function currencyRateAction($currency)
+    {
+        $url = 'http://api.fixer.io/latest?base=' . $currency;
+        $resultJson = file_get_contents($url);
+        $result = json_decode($resultJson, true);
+
     }
 
 
 }
+
+
 
