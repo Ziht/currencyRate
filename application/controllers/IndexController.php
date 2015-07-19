@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Основной контроллер
+ * @author Ziht
+ */
 class IndexController extends Zend_Controller_Action
 {
 
@@ -8,24 +12,34 @@ class IndexController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
+    /**
+     * Основной экшек
+     * @throws Zend_Form_Exception
+     */
     public function indexAction()
     {
-        $currencies = [
-            'USD' => 'USD',
-            'EUR' => 'EUR'
-        ];
-        $this->view->currencies = $currencies;
+        $form = new Application_Form_Currency();
+        $this->view->form = $form;
     }
 
-    public function currencyRateAction($currency)
+    /**
+     * Экшен для ajax'а, возвращает курс валют
+     */
+    public function currencyrateAction()
     {
-        $url = 'http://api.fixer.io/latest?base=' . $currency;
-        $resultJson = file_get_contents($url);
-        $result = json_decode($resultJson, true);
-
+        $this->_helper->layout()->disableLayout();
+        $firstCurrency = $this->_getParam('firstCurrency');
+        $secondCurrency = $this->_getParam('secondCurrency');
+        $currencyChineOfResponsibility = new Library_Class_Currency_Chain_Of_Responsibility();
+        $result = $currencyChineOfResponsibility->setParams(
+            [
+                'firstCurrency' => $firstCurrency,
+                'secondCurrency' => $secondCurrency
+            ]
+        )->run()
+            ->getResult();
+        $this->view->rate = $result['rate'];
     }
-
-
 }
 
 

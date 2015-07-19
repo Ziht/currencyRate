@@ -1,20 +1,45 @@
 <? /** @var Zend_View $this */ ?>
-<style>
+<div id="currencyContainer">
+    <?= $this->form ?>
+    <div id="rate">
 
-</style>
-<div id="page">
-    <h1>Курсы валют</h1>
-
-    <div id="currencyContainer">
-        <div class="currencyBlock">
-                <?= $this->formSelect('currencySelectFirst', '', [], $this->currencies) ?>
-            <div class="currencyShowFirst"></div>
-        </div>
-        <div class="currencyBlock">
-            <div class="currencyShowSecond"></div>
-        </div>
     </div>
 </div>
 <script>
-    var currencyManager = function () {};
+    $(document).ready(function () {
+        var controllerCurrency = function () {};
+        controllerCurrency.prototype.init = function () {
+            var self = this;
+            self.initEvents();
+            self.getRate();
+        };
+        controllerCurrency.prototype.initEvents = function () {
+            var self = this;
+            $('#currencyContainer').on('change', 'select', function () {
+                self.getRate();
+            });
+        };
+        controllerCurrency.prototype.getRate = function () {
+            var self = this;
+            function callback (result) {
+                console.log(html);
+                $('#rate').html(html);
+            }
+            $.ajax({
+                type: "POST",
+                url: '/index/currencyrate',
+                data: self.getData(),
+                cache: false,
+                success: callback
+            });
+        };
+        controllerCurrency.prototype.getData = function () {
+            var data = {};
+            data['firstCurrency'] = $('#firstCurrency').val();
+            data['secondCurrency'] = $('#secondCurrency').val();
+            return data;
+        };
+        var currency = new controllerCurrency();
+        currency.init();
+    });
 </script>
