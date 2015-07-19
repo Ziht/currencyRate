@@ -10,7 +10,20 @@ class Library_Class_Data_Provider_Redis extends Library_Class_Data_Provider
      */
     protected function _init()
     {
-        // TODO: Implement _init() method.
+        $configManager = new Library_Helper_Config();
+        $config = $configManager->getConfig(__CLASS__);
+        $frontendOptions = $config->toArray();
+        $backendOptions = array(
+            'rediska' => new Rediska(),
+        );
+        $this->_provider = Zend_Cache::factory(
+            'Core',
+            'Rediska_Zend_Cache_Backend_Redis',
+            $frontendOptions,
+            $backendOptions,
+            false,
+            true
+        );
     }
 
     /**
@@ -18,7 +31,7 @@ class Library_Class_Data_Provider_Redis extends Library_Class_Data_Provider
      */
     public function set($key, $value)
     {
-        // TODO: Implement set() method.
+        $this->_provider->save($value, $key);
     }
 
     /**
@@ -26,6 +39,6 @@ class Library_Class_Data_Provider_Redis extends Library_Class_Data_Provider
      */
     public function get($key)
     {
-        // TODO: Implement get() method.
+        return $this->_provider->load($key);
     }
 }

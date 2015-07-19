@@ -1,6 +1,7 @@
 <? /** @var Zend_View $this */ ?>
 <div id="currencyContainer">
     <?= $this->form ?>
+    <h2>Курс:</h2>
     <div id="rate">
 
     </div>
@@ -21,8 +22,7 @@
         };
         controllerCurrency.prototype.getRate = function () {
             var self = this;
-            function callback (result) {
-                console.log(html);
+            function callback (html) {
                 $('#rate').html(html);
             }
             $.ajax({

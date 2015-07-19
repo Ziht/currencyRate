@@ -11,6 +11,15 @@ class Library_Class_Currency_Chain_Of_Responsibility_Redis implements Library_In
      */
     public function run($params)
     {
-        return [];
+        $result = [];
+        $firstCurrency = $params['firstCurrency'];
+        $manager = new Library_Class_Data_Provider_Manager();
+        $dataProvider = $manager->get('Redis');
+        $data = $dataProvider->get($firstCurrency);
+        if ($data && isset($data['rate'])) {
+            $result['rate'] = $data['rate'];
+        }
+
+        return $result;
     }
 }
