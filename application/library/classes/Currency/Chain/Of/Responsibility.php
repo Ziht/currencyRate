@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Цепочка обязаности для получения
+ * Цепочка обязаности для получения курса валют
  * @author Ziht
  */
 class Library_Class_Currency_Chain_Of_Responsibility

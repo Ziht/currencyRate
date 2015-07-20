@@ -4,5 +4,5 @@
  * @author Ziht
  */
 return [
-    'Redis', 'Api'
+    'Redis', 'Api_Fixer'
 ];

@@ -13,11 +13,16 @@ class Library_Class_Currency_Chain_Of_Responsibility_Redis implements Library_In
     {
         $result = [];
         $firstCurrency = $params['firstCurrency'];
+        $secondCurrency = $params['secondCurrency'];
         $manager = new Library_Class_Data_Provider_Manager();
         $dataProvider = $manager->get('Redis');
         $data = $dataProvider->get($firstCurrency);
-        if ($data && isset($data['rate'])) {
-            $result['rate'] = $data['rate'];
+        if ($data && isset($data['rates'])) {
+            if (isset($data['rates'][$secondCurrency])) {
+                $result['rate'] = $data['rates'][$secondCurrency];
+            } else {
+                $result['rate'] = 'такая валюта не поддерживается';
+            }
         }
 
         return $result;

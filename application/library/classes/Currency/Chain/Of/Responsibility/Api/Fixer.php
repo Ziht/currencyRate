@@ -3,7 +3,7 @@
  * Звено цепи, отвечающее за api
  * @author Ziht
  */
-class Library_Class_Currency_Chain_Of_Responsibility_Api implements Library_Interface_Currency_Chain_Of_Responsibility
+class Library_Class_Currency_Chain_Of_Responsibility_Api_Fixer implements Library_Interface_Currency_Chain_Of_Responsibility
 {
     /**
      * @inheritdoc
@@ -19,7 +19,6 @@ class Library_Class_Currency_Chain_Of_Responsibility_Api implements Library_Inte
         } else {
             $dataProviderApiFixer = $manager->get('Api_Fixer');
             $data = $dataProviderApiFixer->get($firstCurrency);
-
             if (isset($data['rates'][$secondCurrency])) {
                 $result['rate'] = $data['rates'][$secondCurrency];
             } else {
@@ -27,8 +26,8 @@ class Library_Class_Currency_Chain_Of_Responsibility_Api implements Library_Inte
             }
         }
         $dataProviderRedis = $manager->get('Redis');
-        if (isset($result['rate'])) {
-            $dataProviderRedis->set($firstCurrency, $result);
+        if (isset($data['rates'])) {
+            $dataProviderRedis->set($firstCurrency, $data['rates']);
         }
         return $result;
     }
