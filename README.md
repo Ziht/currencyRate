@@ -7,4 +7,4 @@
 git clone git://github.com/Ziht/currencyRate.git /home/ziht/project/currencyRate
 Желательно создать символическую ссылку в /var/www/имяПроекта.
 Теперь настраиваем nginx и php-fpm, как это сделать, можно прочитать например на этом сайте http://help.ubuntu.ru/wiki/nginx-phpfpm
-Теперь осталось только прописать в application.ini переменную includePaths.library где будет указан путь до ваших библиотек.
+Скачиваем Zend Framework. Теперь осталось только прописать в application.ini переменную includePaths.library где будет указан путь до ваших библиотек.
