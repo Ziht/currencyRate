@@ -1,6 +1,6 @@
 Курсы валют
 
-Установка проекта<br/>
+<b>Установка проекта</b><br/>
 Необходимо установить следующий софт: git, php5, nginx, php5-fpm, redis-server<br/>
 а так же необходимые php расширения, например: php5-cli php5-common php5-mysql php5-gd php5-cgi php-pear php5-mcrypt<br/>
 Копируем проект, например так:<br/>
